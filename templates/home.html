@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+</head>
+<body>
+    <h1>Main Page</h1>
+    <h3>What car type do You need?
+    <select name="car_types" method="GET" action="/">
+      <option value="{{ car_types[0] }}" selected>{{ car_types[0] }}</option>
+      {% for car_type in car_types[1:] %}
+        <option value="{{ car_type }}">{{ car_type }}</option>
+      {% endfor %}
+    </select>
+    </h3>
+</body>
+</html>
+
+
