@@ -1,20 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-</head>
-<body>
-    <h1>Main Page</h1>
-    <h3>What car type do You need?
-    <select name="car_types" method="GET" action="/">
-      <option value="{{ car_types[0] }}" selected>{{ car_types[0] }}</option>
-      {% for car_type in car_types[1:] %}
-        <option value="{{ car_type }}">{{ car_type }}</option>
-      {% endfor %}
-    </select>
-    </h3>
-</body>
-</html>
-
-
+{% extends "base.html" %}
+{% block content %}
+    {% for car in cars %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ car.car_brand }} {{ car.car_model }}</a>
+            </div>
+            <p class="article-content">Car body type: {{ car.car_body }}</p>
+            <p class="article-content">Mileage at: {{ car.mileage }} km</p>
+            <p class="article-content">Price is {{ car.price }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
