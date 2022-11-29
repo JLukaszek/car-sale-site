@@ -24,6 +24,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    @app.route("/")
     @app.route("/home")
     def home():
         return "<h1>Home page</h1>"
