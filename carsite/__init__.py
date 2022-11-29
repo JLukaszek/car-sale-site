@@ -1,6 +1,6 @@
 import os
+
 from flask import Flask
-app = Flask(__name__)
 
 
 def create_app(test_config=None):
@@ -24,9 +24,11 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route("/")
     @app.route("/home")
     def home():
-        return '<p>Home page</p>'
+        return "<h1>Home page</h1>"
+
+    from . import db
+    db.init_app(app)
 
     return app
