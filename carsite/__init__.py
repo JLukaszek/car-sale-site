@@ -8,7 +8,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'carsale.sqlite'),
+        DATABASE=os.path.join(app.instance_path, 'carsite.sqlite'),
     )
 
     if test_config is None:
@@ -24,7 +24,6 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route("/")
     @app.route("/home")
     def home():
         return "<h1>Home page</h1>"
@@ -34,5 +33,9 @@ def create_app(test_config=None):
 
     from . import auth
     app. register_blueprint(auth.bp)
+
+    from . import carsite
+    app.register_blueprint(carsite.bp)
+    app.add_url_rule('/', endpoint='index')
 
     return app
