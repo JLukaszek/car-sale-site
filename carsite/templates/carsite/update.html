@@ -9,8 +9,27 @@
     <label for="title">Title</label>
     <input name="title" id="title"
       value="{{ request.form['title'] or post['title'] }}" required>
-    <label for="body">Body</label>
-    <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
+    <label for="price">Price</label>
+    <input name="price" id="price"
+      value="{{ request.form['price'] or post['price'] }}" required>
+    <label for="style">Style</label>
+    <input name="style" id="style"
+      value="{{ request.form['style'] or post['style'] }}" required>
+    <label for="make">Make</label>
+    <input name="make" id="make"
+      value="{{ request.form['make'] or post['make'] }}" required>
+    <label for="model">Model</label>
+    <input name="model" id="model"
+      value="{{ request.form['model'] or post['model'] }}" required>
+    <label for="fuel">Fuel type</label>
+    <input name="fuel" id="fuel"
+      value="{{ request.form['fuel'] or post['fuel'] }}" required>
+    <label for="age">Year of production</label>
+    <input name="age" id="age"
+      value="{{ request.form['age'] or post['age'] }}" required>
+    <label for="mileage">Mileage</label>
+    <input name="mileage" id="mileage"
+      value="{{ request.form['mileage'] or post['mileage'] }}" required>
     <input type="submit" value="Save">
   </form>
   <hr>

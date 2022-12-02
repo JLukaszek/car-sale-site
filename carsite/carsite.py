@@ -13,7 +13,7 @@ bp = Blueprint('carsite', __name__)
 def index():
     db = get_db()
     posts = db.execute(
-        'SELECT p.id, title, body, created, author_id, username'
+        'SELECT p.id, title, price, style, make, model, fuel, age, mileage, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
@@ -25,7 +25,13 @@ def index():
 def create():
     if request.method == 'POST':
         title = request.form['title']
-        body = request.form['body']
+        price = request.form['price']
+        style = request.form['style']
+        make = request.form['make']
+        model = request.form['model']
+        fuel = request.form['fuel']
+        age = request.form['age']
+        mileage = request.form['mileage']
         error = None
 
         if not title:
@@ -36,9 +42,9 @@ def create():
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO post (title, body, author_id)'
-                ' VALUES (?, ?, ?)',
-                (title, body, g.user['id'])
+                'INSERT INTO post (title, price, style, make, model, fuel, age, mileage, author_id)'
+                ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                (title, price, style, make, model, fuel, age, mileage, g.user['id'])
             )
             db.commit()
             return redirect(url_for('carsite.index'))
@@ -48,7 +54,7 @@ def create():
 
 def get_post(id, check_author=True):
     post = get_db().execute(
-        'SELECT p.id, title, body, created, author_id, username'
+        'SELECT p.id, title, price, style, make, model, fuel, age, mileage, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' WHERE p.id = ?',
         (id,)
@@ -70,7 +76,13 @@ def update(id):
 
     if request.method == 'POST':
         title = request.form['title']
-        body = request.form['body']
+        price = request.form['price']
+        style = request.form['style']
+        make = request.form['make']
+        model = request.form['model']
+        fuel = request.form['fuel']
+        age = request.form['age']
+        mileage = request.form['mileage']
         error = None
 
         if not title:
@@ -81,9 +93,9 @@ def update(id):
         else:
             db = get_db()
             db.execute(
-                'UPDATE post SET title = ?, body = ?'
+                'UPDATE post SET title = ?, price = ?, style = ?, make = ?, model = ?, fuel = ?, age = ?, mileage = ?'
                 ' WHERE id = ?',
-                (title, body, id)
+                (title, price, style, make, model, fuel, age, mileage, id)
             )
             db.commit()
             return redirect(url_for('carsite.index'))
