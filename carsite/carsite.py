@@ -95,3 +95,11 @@ def delete(id):
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()
     return redirect(url_for('carsite.index'))
+
+
+@bp.route('/account', methods=('GET', 'POST'))
+@login_required
+def account():
+    if request.method == "POST":
+        return redirect(url_for('index'))
+    return render_template('carsite/account.html')

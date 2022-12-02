@@ -13,25 +13,31 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
     if request.method == 'POST':
-        username = request.form['username']
+        mail = request.form['mail']
         password = request.form['password']
+        username = request.form['username']
+        answer = request.form['answer']
         db = get_db()
         error = None
 
-        if not username:
-            error = 'Username is required.'
+        if not mail:
+            error = 'Mail is required.'
         elif not password:
             error = 'Password is required.'
+        elif not username:
+            error = 'Username is required.'
+        elif not answer:
+            error = 'Answer is required.'
 
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO user (username, password) VALUES (?, ?)",
-                    (username, generate_password_hash(password)),
+                    "INSERT INTO user (mail, password, username, answer) VALUES (?, ?, ?, ?)",
+                    (mail, generate_password_hash(password), username, answer),
                 )
                 db.commit()
             except db.IntegrityError:
-                error = f"User {username} is already registered."
+                error = f"User {mail} is already registered."
             else:
                 return redirect(url_for("auth.login"))
 
@@ -43,16 +49,16 @@ def register():
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'POST':
-        username = request.form['username']
+        mail = request.form['mail']
         password = request.form['password']
         db = get_db()
         error = None
         user = db.execute(
-            'SELECT * FROM user WHERE username = ?', (username,)
+            'SELECT * FROM user WHERE mail = ?', (mail,)
         ).fetchone()
 
         if user is None:
-            error = 'Incorrect username.'
+            error = 'Incorrect mail.'
         elif not check_password_hash(user['password'], password):
             error = 'Incorrect password.'
 
