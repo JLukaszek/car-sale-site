@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Account details{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="mail">Mail</label>
+    <input name="mail" id="mail" value="{{ g.user['mail'] }}" required>
+    <label for="username">Username</label>
+    <input name="username" id="username" value="{{ g.user['username'] }}" required>
+    <label for="answer">Answer</label>
+    <input name="answer" id="answer" value="{{ g.user['answer'] }}" required>
+    <input type="submit" value="Save">
+  </form>
+{% endblock %}
