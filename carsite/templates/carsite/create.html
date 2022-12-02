@@ -6,11 +6,9 @@
 
 {% block content %}
   <form method="post">
-    <label for="title">Title</label>
-    <input name="title" id="title" value="{{ request.form['title'] }}" required>
     <label for="price">Price</label>
     <input name="price" id="price" value="{{ request.form['price'] }}" required>
-    <label for="style">style</label>
+    <label for="style">Style</label>
     <input name="style" id="style" value="{{ request.form['style'] }}" required>
     <label for="make">Make</label>
     <input name="make" id="make" value="{{ request.form['make'] }}" required>
