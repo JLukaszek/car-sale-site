@@ -4,6 +4,7 @@
 <nav>
     <h1><a href="{{ url_for('carsite.index') }}">Car Sale Site</a></h1>
     <ul>
+        <li><a href="{{ url_for('carsite.auctions') }}">Latest auctions</a>
         {% if g.user %}
             <li><a href="{{ url_for('carsite.account') }}">{{ g.user['username'] }}</a>
             <li><a href="{{ url_for('auth.logout') }}">Log Out</a>

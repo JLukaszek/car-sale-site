@@ -11,13 +11,7 @@ bp = Blueprint('carsite', __name__)
 
 @bp.route('/')
 def index():
-    db = get_db()
-    posts = db.execute(
-        'SELECT p.id, price, style, make, model, fuel, age, mileage, created, author_id, username'
-        ' FROM post p JOIN user u ON p.author_id = u.id'
-        ' ORDER BY created DESC'
-    ).fetchall()
-    return render_template('carsite/index.html', posts=posts)
+    return render_template('carsite/index.html')
 
 
 @bp.route('/create', methods=('GET', 'POST'))
@@ -39,7 +33,7 @@ def create():
             (price, style, make, model, fuel, age, mileage, g.user['id'])
         )
         db.commit()
-        return redirect(url_for('carsite.index'))
+        return redirect(url_for('carsite.auctions'))
 
     return render_template('carsite/create.html')
 
@@ -82,7 +76,7 @@ def update(id):
             (price, style, make, model, fuel, age, mileage, id)
         )
         db.commit()
-        return redirect(url_for('carsite.index'))
+        return redirect(url_for('carsite.auctions'))
 
     return render_template('carsite/update.html', post=post)
 
@@ -103,3 +97,14 @@ def account():
     if request.method == "POST":
         return redirect(url_for('index'))
     return render_template('carsite/account.html')
+
+
+@bp.route('/auctions', methods=('GET', 'POST'))
+def auctions():
+    db = get_db()
+    posts = db.execute(
+        'SELECT p.id, price, style, make, model, fuel, age, mileage, created, author_id, username'
+        ' FROM post p JOIN user u ON p.author_id = u.id'
+        ' ORDER BY created DESC'
+    ).fetchall()
+    return render_template('carsite/auctions.html', posts=posts)
