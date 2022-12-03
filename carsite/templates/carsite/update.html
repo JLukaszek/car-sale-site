@@ -9,18 +9,30 @@
     <label for="price">Price</label>
     <input name="price" id="price" type="number" min="1"
       value="{{ request.form['price'] or post['price'] }}" required>
-    <label for="style">Style</label>
-    <input name="style" id="style"
-      value="{{ request.form['style'] or post['style'] }}" required>
+    <label for="style">Body Style</label>
+    <select name="style" id="style">
+    <option value="{{ request.form['style'] or post['style'] }}" selected>{{ request.form['style'] or post['style'] }}</option>
+      {% for style in styles[0:] %}
+        <option value="{{ style }}">{{ style }}</option>
+      {% endfor %}
+    </select>
     <label for="make">Make</label>
-    <input name="make" id="make"
-      value="{{ request.form['make'] or post['make'] }}" required>
+    <select name="make" id="make">
+    <option value="{{ request.form['make'] or post['make'] }}" selected>{{ request.form['make'] or post['make'] }}</option>
+      {% for make in makes[0:] %}
+        <option value="{{ make }}">{{ make }}</option>
+      {% endfor %}
+    </select>
     <label for="model">Model</label>
     <input name="model" id="model"
       value="{{ request.form['model'] or post['model'] }}" required>
     <label for="fuel">Fuel type</label>
-    <input name="fuel" id="fuel"
-      value="{{ request.form['fuel'] or post['fuel'] }}" required>
+    <select name="fuel" id="fuel">
+    <option value="{{ request.form['fuel'] or post['fuel'] }}" selected>{{ request.form['fuel'] or post['fuel'] }}</option>
+      {% for fuel in fuels[0:] %}
+        <option value="{{ fuel }}">{{ fuel }}</option>
+      {% endfor %}
+    </select>
     <label for="age">Year of production</label>
     <input name="age" id="age" type="number" min="1885" max="2023"
       value="{{ request.form['age'] or post['age'] }}" required>

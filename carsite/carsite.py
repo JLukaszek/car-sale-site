@@ -17,6 +17,10 @@ def index():
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
+    styles = ['SUV', 'Sedan', 'Coupe', 'Van', 'Hatchback', 'Crossover', 'Truck']
+    fuels = ['Gasoline', 'Electric', 'Diesel', 'Hybrid']
+    makes = ['Audi', 'BMW', 'Citroën', 'Dacia', 'Fiat', 'Ford', 'Hyundai', 'Jeep', 'Kia', 'Mercedes', 'Nissan', 'Opel'
+             'Renault', 'Seat', 'Skoda', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo']
     if request.method == 'POST':
         price = request.form['price']
         style = request.form['style']
@@ -35,7 +39,7 @@ def create():
         db.commit()
         return redirect(url_for('carsite.auctions'))
 
-    return render_template('carsite/create.html')
+    return render_template('carsite/create.html', styles=styles, fuels=fuels, makes=makes)
 
 
 def get_post(id, check_author=True):
@@ -59,7 +63,10 @@ def get_post(id, check_author=True):
 @login_required
 def update(id):
     post = get_post(id)
-
+    styles = ['SUV', 'Sedan', 'Coupe', 'Van', 'Hatchback', 'Crossover', 'Truck']
+    fuels = ['Gasoline', 'Electric', 'Diesel', 'Hybrid']
+    makes = ['Audi', 'BMW', 'Citroën', 'Dacia', 'Fiat', 'Ford', 'Hyundai', 'Jeep', 'Kia', 'Mercedes', 'Nissan', 'Opel'
+             'Renault', 'Seat', 'Skoda', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo']
     if request.method == 'POST':
         price = request.form['price']
         style = request.form['style']
@@ -78,7 +85,7 @@ def update(id):
         db.commit()
         return redirect(url_for('carsite.auctions'))
 
-    return render_template('carsite/update.html', post=post)
+    return render_template('carsite/update.html', post=post, styles=styles, fuels=fuels, makes=makes)
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
