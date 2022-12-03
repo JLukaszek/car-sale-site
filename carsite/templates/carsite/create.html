@@ -7,7 +7,7 @@
 {% block content %}
   <form method="post">
     <label for="price">Price</label>
-    <input name="price" id="price" value="{{ request.form['price'] }}" required>
+    <input name="price" id="price" type="number" min="1" value="{{ request.form['price'] }}" required>
     <label for="style">Style</label>
     <input name="style" id="style" value="{{ request.form['style'] }}" required>
     <label for="make">Make</label>
@@ -17,9 +17,9 @@
     <label for="fuel">Fuel type</label>
     <input name="fuel" id="fuel" value="{{ request.form['fuel'] }}" required>
     <label for="age">Year of production</label>
-    <input name="age" id="age" value="{{ request.form['age'] }}" required>
+    <input name="age" id="age" type="number" min="1885" max="2023" value="{{ request.form['age'] }}" required>
     <label for="mileage">Mileage</label>
-    <input name="mileage" id="mileage" value="{{ request.form['mileage'] }}" required>
+    <input name="mileage" id="mileage" type="number" min="0" value="{{ request.form['mileage'] }}" required>
     <input type="submit" value="Save">
   </form>
 {% endblock %}
