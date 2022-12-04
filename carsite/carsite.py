@@ -9,9 +9,14 @@ from carsite.db import get_db
 bp = Blueprint('carsite', __name__)
 
 
-@bp.route('/')
+@bp.route('/', methods=('GET', 'POST'))
 def index():
-    return render_template('carsite/index.html')
+    makes = ['Audi', 'BMW', 'Citroën', 'Dacia', 'Fiat', 'Ford', 'Hyundai', 'Jeep', 'Kia', 'Mercedes', 'Nissan', 'Opel',
+             'Renault', 'Seat', 'Skoda', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo']
+    if request.method == "POST":
+        make = request.form['make']
+        return redirect(url_for('carsite.order_by_make', make=make))
+    return render_template('carsite/index.html', makes=makes)
 
 
 @bp.route('/create', methods=('GET', 'POST'))
@@ -19,7 +24,7 @@ def index():
 def create():
     styles = ['SUV', 'Sedan', 'Coupe', 'Van', 'Hatchback', 'Crossover', 'Truck']
     fuels = ['Gasoline', 'Electric', 'Diesel', 'Hybrid']
-    makes = ['Audi', 'BMW', 'Citroën', 'Dacia', 'Fiat', 'Ford', 'Hyundai', 'Jeep', 'Kia', 'Mercedes', 'Nissan', 'Opel'
+    makes = ['Audi', 'BMW', 'Citroën', 'Dacia', 'Fiat', 'Ford', 'Hyundai', 'Jeep', 'Kia', 'Mercedes', 'Nissan', 'Opel',
              'Renault', 'Seat', 'Skoda', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo']
     if request.method == 'POST':
         price = request.form['price']
@@ -65,7 +70,7 @@ def update(id):
     post = get_post(id)
     styles = ['SUV', 'Sedan', 'Coupe', 'Van', 'Hatchback', 'Crossover', 'Truck']
     fuels = ['Gasoline', 'Electric', 'Diesel', 'Hybrid']
-    makes = ['Audi', 'BMW', 'Citroën', 'Dacia', 'Fiat', 'Ford', 'Hyundai', 'Jeep', 'Kia', 'Mercedes', 'Nissan', 'Opel'
+    makes = ['Audi', 'BMW', 'Citroën', 'Dacia', 'Fiat', 'Ford', 'Hyundai', 'Jeep', 'Kia', 'Mercedes', 'Nissan', 'Opel',
              'Renault', 'Seat', 'Skoda', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo']
     if request.method == 'POST':
         price = request.form['price']
@@ -115,3 +120,14 @@ def auctions():
         ' ORDER BY created DESC'
     ).fetchall()
     return render_template('carsite/auctions.html', posts=posts)
+
+
+@bp.route('/auctions/<make>', methods=('GET', 'POST'))
+def order_by_make(make):
+    db = get_db()
+    posts = db.execute(
+        'SELECT p.id, price, style, make, model, fuel, age, mileage, created, author_id, username'
+        ' FROM post p JOIN user u ON p.author_id = u.id'
+        f' WHERE make = "{make}"'
+    ).fetchall()
+    return render_template('carsite/order_by_make.html', posts=posts)

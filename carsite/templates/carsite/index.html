@@ -1,1 +1,18 @@
 {% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Search by{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="make">Make</label>
+    <select name="make" id="make">
+    <option value="{{ makes[0] }}" selected>{{ makes[0] }}</option>
+      {% for make in makes[1:] %}
+        <option value="{{ make }}">{{ make }}</option>
+      {% endfor %}
+    </select>
+    <input type="submit" value="Choose">
+  </form>
+{% endblock %}
