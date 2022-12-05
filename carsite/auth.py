@@ -90,6 +90,11 @@ def logout():
     return redirect(url_for('index'))
 
 
+@bp.route('/reset_password')
+def reset_password():
+    return render_template('auth/password_reset.html')
+
+
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
