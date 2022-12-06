@@ -131,3 +131,9 @@ def order_by_make(make):
         f' WHERE make = "{make}"'
     ).fetchall()
     return render_template('carsite/order_by_make.html', posts=posts)
+
+
+@bp.route('/auction/<int:id>', methods=('GET', "POST"))
+def single_auction(id):
+    post = get_post(id)
+    return render_template('carsite/single_auction.html', post=post)
